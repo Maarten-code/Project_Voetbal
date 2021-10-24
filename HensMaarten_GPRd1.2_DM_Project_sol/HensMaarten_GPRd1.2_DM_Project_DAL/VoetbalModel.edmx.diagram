@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0f06184c2bf84d43bff86162d8348619" Name="Diagram1">
+        <EntityTypeShape EntityType="VoetbalModel.Competitie" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VoetbalModel.Functie" Width="1.5" PointX="1.5" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VoetbalModel.Positie" Width="1.5" PointX="11.375" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VoetbalModel.Speler" Width="1.5" PointX="11.25" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VoetbalModel.Stadion" Width="1.5" PointX="7.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VoetbalModel.StadionTeam" Width="1.5" PointX="7.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VoetbalModel.Team" Width="1.5" PointX="6.625" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VoetbalModel.TeamCompetitie" Width="1.5" PointX="2.625" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VoetbalModel.TeamSpeler" Width="1.5" PointX="9.125" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VoetbalModel.Trainer" Width="1.5" PointX="8.125" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VoetbalModel.TrainerTeam" Width="1.5" PointX="8.125" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VoetbalModel.Wedstrijd" Width="1.5" PointX="3.125" PointY="11.75" IsExpanded="true" />
+        <AssociationConnector Association="VoetbalModel.FK_TeamCompetitie_Competitie" ManuallyRouted="false" />
+        <AssociationConnector Association="VoetbalModel.FK_Trainer_Functie" ManuallyRouted="false" />
+        <AssociationConnector Association="VoetbalModel.FK_Speler_Positie" ManuallyRouted="false" />
+        <AssociationConnector Association="VoetbalModel.FK_TeamSpeler_Speler" ManuallyRouted="false" />
+        <AssociationConnector Association="VoetbalModel.FK_StadionTeam_Stadion" ManuallyRouted="false" />
+        <AssociationConnector Association="VoetbalModel.FK_StadionTeam_Team" ManuallyRouted="false" />
+        <AssociationConnector Association="VoetbalModel.FK_TeamCompetitie_Team" ManuallyRouted="false" />
+        <AssociationConnector Association="VoetbalModel.FK_TeamSpeler_Team" ManuallyRouted="false" />
+        <AssociationConnector Association="VoetbalModel.FK_TrainerTeam_Team" ManuallyRouted="false" />
+        <AssociationConnector Association="VoetbalModel.FK_Wedstrijd_Team" ManuallyRouted="false" />
+        <AssociationConnector Association="VoetbalModel.FK_Wedstrijd_Team2" ManuallyRouted="false" />
+        <AssociationConnector Association="VoetbalModel.FK_TrainerTeam_Trainer" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

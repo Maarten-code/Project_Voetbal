@@ -1,0 +1,834 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="VoetbalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Competitie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="naam" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Functie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="naam" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Positie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="naam" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Speler">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="voornaam" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="naam" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="geboorteDatum" Type="date" Nullable="false" />
+          <Property Name="nationaliteit" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="lengteInM" Type="real" />
+          <Property Name="gewichtInKg" Type="int" />
+          <Property Name="positieId" Type="int" />
+        </EntityType>
+        <EntityType Name="Stadion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="naam" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="straat" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="straatNummer" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="gemeente" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StadionTeam">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="stadionId" Type="int" />
+          <Property Name="teamId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="naam" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="oprichtingsDatum" Type="date" Nullable="false" />
+          <Property Name="website" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TeamCompetitie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="teamId" Type="int" Nullable="false" />
+          <Property Name="competitieId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamSpeler">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="spelerId" Type="int" />
+          <Property Name="teamId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trainer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="voornaam" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="naam" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nationaliteit" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="geboorteDatum" Type="date" Nullable="false" />
+          <Property Name="lengteInM" Type="real" />
+          <Property Name="gewichtInKG" Type="int" />
+          <Property Name="functieId" Type="int" />
+        </EntityType>
+        <EntityType Name="TrainerTeam">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="trainerId" Type="int" />
+          <Property Name="teamId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Wedstrijd">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="uitslag" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="datum" Type="date" Nullable="false" />
+          <Property Name="teamId" Type="int" Nullable="false" />
+          <Property Name="tegenstanderId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Speler_Positie">
+          <End Role="Positie" Type="Self.Positie" Multiplicity="0..1" />
+          <End Role="Speler" Type="Self.Speler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positie">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Speler">
+              <PropertyRef Name="positieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StadionTeam_Stadion">
+          <End Role="Stadion" Type="Self.Stadion" Multiplicity="0..1" />
+          <End Role="StadionTeam" Type="Self.StadionTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stadion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="StadionTeam">
+              <PropertyRef Name="stadionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StadionTeam_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StadionTeam" Type="Self.StadionTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="StadionTeam">
+              <PropertyRef Name="teamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamCompetitie_Competitie">
+          <End Role="Competitie" Type="Self.Competitie" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamCompetitie" Type="Self.TeamCompetitie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competitie">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TeamCompetitie">
+              <PropertyRef Name="competitieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamCompetitie_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamCompetitie" Type="Self.TeamCompetitie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TeamCompetitie">
+              <PropertyRef Name="teamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamSpeler_Speler">
+          <End Role="Speler" Type="Self.Speler" Multiplicity="0..1" />
+          <End Role="TeamSpeler" Type="Self.TeamSpeler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Speler">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TeamSpeler">
+              <PropertyRef Name="spelerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamSpeler_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamSpeler" Type="Self.TeamSpeler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TeamSpeler">
+              <PropertyRef Name="teamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trainer_Functie">
+          <End Role="Functie" Type="Self.Functie" Multiplicity="0..1" />
+          <End Role="Trainer" Type="Self.Trainer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Functie">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Trainer">
+              <PropertyRef Name="functieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrainerTeam_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TrainerTeam" Type="Self.TrainerTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TrainerTeam">
+              <PropertyRef Name="teamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrainerTeam_Trainer">
+          <End Role="Trainer" Type="Self.Trainer" Multiplicity="0..1" />
+          <End Role="TrainerTeam" Type="Self.TrainerTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TrainerTeam">
+              <PropertyRef Name="trainerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wedstrijd_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Wedstrijd" Type="Self.Wedstrijd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Wedstrijd">
+              <PropertyRef Name="teamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wedstrijd_Team2">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Wedstrijd" Type="Self.Wedstrijd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Wedstrijd">
+              <PropertyRef Name="tegenstanderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VoetbalModelStoreContainer">
+          <EntitySet Name="Competitie" EntityType="Self.Competitie" Schema="Voetbal" store:Type="Tables" />
+          <EntitySet Name="Functie" EntityType="Self.Functie" Schema="Voetbal" store:Type="Tables" />
+          <EntitySet Name="Positie" EntityType="Self.Positie" Schema="Voetbal" store:Type="Tables" />
+          <EntitySet Name="Speler" EntityType="Self.Speler" Schema="Voetbal" store:Type="Tables" />
+          <EntitySet Name="Stadion" EntityType="Self.Stadion" Schema="Voetbal" store:Type="Tables" />
+          <EntitySet Name="StadionTeam" EntityType="Self.StadionTeam" Schema="Voetbal" store:Type="Tables" />
+          <EntitySet Name="Team" EntityType="Self.Team" Schema="Voetbal" store:Type="Tables" />
+          <EntitySet Name="TeamCompetitie" EntityType="Self.TeamCompetitie" Schema="Voetbal" store:Type="Tables" />
+          <EntitySet Name="TeamSpeler" EntityType="Self.TeamSpeler" Schema="Voetbal" store:Type="Tables" />
+          <EntitySet Name="Trainer" EntityType="Self.Trainer" Schema="Voetbal" store:Type="Tables" />
+          <EntitySet Name="TrainerTeam" EntityType="Self.TrainerTeam" Schema="Voetbal" store:Type="Tables" />
+          <EntitySet Name="Wedstrijd" EntityType="Self.Wedstrijd" Schema="Voetbal" store:Type="Tables" />
+          <AssociationSet Name="FK_Speler_Positie" Association="Self.FK_Speler_Positie">
+            <End Role="Positie" EntitySet="Positie" />
+            <End Role="Speler" EntitySet="Speler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StadionTeam_Stadion" Association="Self.FK_StadionTeam_Stadion">
+            <End Role="Stadion" EntitySet="Stadion" />
+            <End Role="StadionTeam" EntitySet="StadionTeam" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StadionTeam_Team" Association="Self.FK_StadionTeam_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="StadionTeam" EntitySet="StadionTeam" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamCompetitie_Competitie" Association="Self.FK_TeamCompetitie_Competitie">
+            <End Role="Competitie" EntitySet="Competitie" />
+            <End Role="TeamCompetitie" EntitySet="TeamCompetitie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamCompetitie_Team" Association="Self.FK_TeamCompetitie_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="TeamCompetitie" EntitySet="TeamCompetitie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamSpeler_Speler" Association="Self.FK_TeamSpeler_Speler">
+            <End Role="Speler" EntitySet="Speler" />
+            <End Role="TeamSpeler" EntitySet="TeamSpeler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamSpeler_Team" Association="Self.FK_TeamSpeler_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="TeamSpeler" EntitySet="TeamSpeler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trainer_Functie" Association="Self.FK_Trainer_Functie">
+            <End Role="Functie" EntitySet="Functie" />
+            <End Role="Trainer" EntitySet="Trainer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrainerTeam_Team" Association="Self.FK_TrainerTeam_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="TrainerTeam" EntitySet="TrainerTeam" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrainerTeam_Trainer" Association="Self.FK_TrainerTeam_Trainer">
+            <End Role="Trainer" EntitySet="Trainer" />
+            <End Role="TrainerTeam" EntitySet="TrainerTeam" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wedstrijd_Team" Association="Self.FK_Wedstrijd_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Wedstrijd" EntitySet="Wedstrijd" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wedstrijd_Team2" Association="Self.FK_Wedstrijd_Team2">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Wedstrijd" EntitySet="Wedstrijd" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VoetbalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Competitie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="naam" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TeamCompetities" Relationship="Self.FK_TeamCompetitie_Competitie" FromRole="Competitie" ToRole="TeamCompetitie" />
+        </EntityType>
+        <EntityType Name="Functie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="naam" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Trainers" Relationship="Self.FK_Trainer_Functie" FromRole="Functie" ToRole="Trainer" />
+        </EntityType>
+        <EntityType Name="Positie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="naam" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Spelers" Relationship="Self.FK_Speler_Positie" FromRole="Positie" ToRole="Speler" />
+        </EntityType>
+        <EntityType Name="Speler">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="voornaam" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="naam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="geboorteDatum" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="nationaliteit" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lengteInM" Type="Single" />
+          <Property Name="gewichtInKg" Type="Int32" />
+          <Property Name="positieId" Type="Int32" />
+          <NavigationProperty Name="Positie" Relationship="Self.FK_Speler_Positie" FromRole="Speler" ToRole="Positie" />
+          <NavigationProperty Name="TeamSpelers" Relationship="Self.FK_TeamSpeler_Speler" FromRole="Speler" ToRole="TeamSpeler" />
+        </EntityType>
+        <EntityType Name="Stadion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="naam" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="straat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="straatNummer" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gemeente" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="StadionTeams" Relationship="Self.FK_StadionTeam_Stadion" FromRole="Stadion" ToRole="StadionTeam" />
+        </EntityType>
+        <EntityType Name="StadionTeam">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="stadionId" Type="Int32" />
+          <Property Name="teamId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Stadion" Relationship="Self.FK_StadionTeam_Stadion" FromRole="StadionTeam" ToRole="Stadion" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_StadionTeam_Team" FromRole="StadionTeam" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="naam" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="oprichtingsDatum" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="website" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="StadionTeams" Relationship="Self.FK_StadionTeam_Team" FromRole="Team" ToRole="StadionTeam" />
+          <NavigationProperty Name="TeamCompetities" Relationship="Self.FK_TeamCompetitie_Team" FromRole="Team" ToRole="TeamCompetitie" />
+          <NavigationProperty Name="TeamSpelers" Relationship="Self.FK_TeamSpeler_Team" FromRole="Team" ToRole="TeamSpeler" />
+          <NavigationProperty Name="TrainerTeams" Relationship="Self.FK_TrainerTeam_Team" FromRole="Team" ToRole="TrainerTeam" />
+          <NavigationProperty Name="ThuisWedstrijden" Relationship="Self.FK_Wedstrijd_Team" FromRole="Team" ToRole="Wedstrijd" />
+          <NavigationProperty Name="UitWedstrijden" Relationship="Self.FK_Wedstrijd_Team2" FromRole="Team" ToRole="Wedstrijd" />
+        </EntityType>
+        <EntityType Name="TeamCompetitie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="teamId" Type="Int32" Nullable="false" />
+          <Property Name="competitieId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Competitie" Relationship="Self.FK_TeamCompetitie_Competitie" FromRole="TeamCompetitie" ToRole="Competitie" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_TeamCompetitie_Team" FromRole="TeamCompetitie" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="TeamSpeler">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="spelerId" Type="Int32" />
+          <Property Name="teamId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Speler" Relationship="Self.FK_TeamSpeler_Speler" FromRole="TeamSpeler" ToRole="Speler" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_TeamSpeler_Team" FromRole="TeamSpeler" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Trainer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="voornaam" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="naam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nationaliteit" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="geboorteDatum" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="lengteInM" Type="Single" />
+          <Property Name="gewichtInKG" Type="Int32" />
+          <Property Name="functieId" Type="Int32" />
+          <NavigationProperty Name="Functie" Relationship="Self.FK_Trainer_Functie" FromRole="Trainer" ToRole="Functie" />
+          <NavigationProperty Name="TrainerTeams" Relationship="Self.FK_TrainerTeam_Trainer" FromRole="Trainer" ToRole="TrainerTeam" />
+        </EntityType>
+        <EntityType Name="TrainerTeam">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="trainerId" Type="Int32" />
+          <Property Name="teamId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_TrainerTeam_Team" FromRole="TrainerTeam" ToRole="Team" />
+          <NavigationProperty Name="Trainer" Relationship="Self.FK_TrainerTeam_Trainer" FromRole="TrainerTeam" ToRole="Trainer" />
+        </EntityType>
+        <EntityType Name="Wedstrijd">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="uitslag" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="datum" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="teamId" Type="Int32" Nullable="false" />
+          <Property Name="tegenstanderId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_Wedstrijd_Team" FromRole="Wedstrijd" ToRole="Team" />
+          <NavigationProperty Name="Tegenstander" Relationship="Self.FK_Wedstrijd_Team2" FromRole="Wedstrijd" ToRole="Team" />
+        </EntityType>
+        <Association Name="FK_TeamCompetitie_Competitie">
+          <End Role="Competitie" Type="Self.Competitie" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamCompetitie" Type="Self.TeamCompetitie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competitie">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TeamCompetitie">
+              <PropertyRef Name="competitieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trainer_Functie">
+          <End Role="Functie" Type="Self.Functie" Multiplicity="0..1" />
+          <End Role="Trainer" Type="Self.Trainer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Functie">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Trainer">
+              <PropertyRef Name="functieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Speler_Positie">
+          <End Role="Positie" Type="Self.Positie" Multiplicity="0..1" />
+          <End Role="Speler" Type="Self.Speler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positie">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Speler">
+              <PropertyRef Name="positieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamSpeler_Speler">
+          <End Role="Speler" Type="Self.Speler" Multiplicity="0..1" />
+          <End Role="TeamSpeler" Type="Self.TeamSpeler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Speler">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TeamSpeler">
+              <PropertyRef Name="spelerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StadionTeam_Stadion">
+          <End Role="Stadion" Type="Self.Stadion" Multiplicity="0..1" />
+          <End Role="StadionTeam" Type="Self.StadionTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stadion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="StadionTeam">
+              <PropertyRef Name="stadionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StadionTeam_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StadionTeam" Type="Self.StadionTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="StadionTeam">
+              <PropertyRef Name="teamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamCompetitie_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamCompetitie" Type="Self.TeamCompetitie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TeamCompetitie">
+              <PropertyRef Name="teamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamSpeler_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamSpeler" Type="Self.TeamSpeler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TeamSpeler">
+              <PropertyRef Name="teamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrainerTeam_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TrainerTeam" Type="Self.TrainerTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TrainerTeam">
+              <PropertyRef Name="teamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wedstrijd_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Wedstrijd" Type="Self.Wedstrijd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Wedstrijd">
+              <PropertyRef Name="teamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wedstrijd_Team2">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Wedstrijd" Type="Self.Wedstrijd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Wedstrijd">
+              <PropertyRef Name="tegenstanderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrainerTeam_Trainer">
+          <End Role="Trainer" Type="Self.Trainer" Multiplicity="0..1" />
+          <End Role="TrainerTeam" Type="Self.TrainerTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TrainerTeam">
+              <PropertyRef Name="trainerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VoetbalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Competitie" EntityType="Self.Competitie" />
+          <EntitySet Name="Functie" EntityType="Self.Functie" />
+          <EntitySet Name="Positie" EntityType="Self.Positie" />
+          <EntitySet Name="Speler" EntityType="Self.Speler" />
+          <EntitySet Name="Stadion" EntityType="Self.Stadion" />
+          <EntitySet Name="StadionTeam" EntityType="Self.StadionTeam" />
+          <EntitySet Name="Team" EntityType="Self.Team" />
+          <EntitySet Name="TeamCompetitie" EntityType="Self.TeamCompetitie" />
+          <EntitySet Name="TeamSpeler" EntityType="Self.TeamSpeler" />
+          <EntitySet Name="Trainer" EntityType="Self.Trainer" />
+          <EntitySet Name="TrainerTeam" EntityType="Self.TrainerTeam" />
+          <EntitySet Name="Wedstrijd" EntityType="Self.Wedstrijd" />
+          <AssociationSet Name="FK_TeamCompetitie_Competitie" Association="Self.FK_TeamCompetitie_Competitie">
+            <End Role="Competitie" EntitySet="Competitie" />
+            <End Role="TeamCompetitie" EntitySet="TeamCompetitie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trainer_Functie" Association="Self.FK_Trainer_Functie">
+            <End Role="Functie" EntitySet="Functie" />
+            <End Role="Trainer" EntitySet="Trainer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Speler_Positie" Association="Self.FK_Speler_Positie">
+            <End Role="Positie" EntitySet="Positie" />
+            <End Role="Speler" EntitySet="Speler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamSpeler_Speler" Association="Self.FK_TeamSpeler_Speler">
+            <End Role="Speler" EntitySet="Speler" />
+            <End Role="TeamSpeler" EntitySet="TeamSpeler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StadionTeam_Stadion" Association="Self.FK_StadionTeam_Stadion">
+            <End Role="Stadion" EntitySet="Stadion" />
+            <End Role="StadionTeam" EntitySet="StadionTeam" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StadionTeam_Team" Association="Self.FK_StadionTeam_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="StadionTeam" EntitySet="StadionTeam" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamCompetitie_Team" Association="Self.FK_TeamCompetitie_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="TeamCompetitie" EntitySet="TeamCompetitie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamSpeler_Team" Association="Self.FK_TeamSpeler_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="TeamSpeler" EntitySet="TeamSpeler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrainerTeam_Team" Association="Self.FK_TrainerTeam_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="TrainerTeam" EntitySet="TrainerTeam" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wedstrijd_Team" Association="Self.FK_Wedstrijd_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Wedstrijd" EntitySet="Wedstrijd" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wedstrijd_Team2" Association="Self.FK_Wedstrijd_Team2">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Wedstrijd" EntitySet="Wedstrijd" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrainerTeam_Trainer" Association="Self.FK_TrainerTeam_Trainer">
+            <End Role="Trainer" EntitySet="Trainer" />
+            <End Role="TrainerTeam" EntitySet="TrainerTeam" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VoetbalModelStoreContainer" CdmEntityContainer="VoetbalEntities">
+          <EntitySetMapping Name="Competitie">
+            <EntityTypeMapping TypeName="VoetbalModel.Competitie">
+              <MappingFragment StoreEntitySet="Competitie">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="naam" ColumnName="naam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Functie">
+            <EntityTypeMapping TypeName="VoetbalModel.Functie">
+              <MappingFragment StoreEntitySet="Functie">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="naam" ColumnName="naam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Positie">
+            <EntityTypeMapping TypeName="VoetbalModel.Positie">
+              <MappingFragment StoreEntitySet="Positie">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="naam" ColumnName="naam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Speler">
+            <EntityTypeMapping TypeName="VoetbalModel.Speler">
+              <MappingFragment StoreEntitySet="Speler">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="voornaam" ColumnName="voornaam" />
+                <ScalarProperty Name="naam" ColumnName="naam" />
+                <ScalarProperty Name="geboorteDatum" ColumnName="geboorteDatum" />
+                <ScalarProperty Name="nationaliteit" ColumnName="nationaliteit" />
+                <ScalarProperty Name="lengteInM" ColumnName="lengteInM" />
+                <ScalarProperty Name="gewichtInKg" ColumnName="gewichtInKg" />
+                <ScalarProperty Name="positieId" ColumnName="positieId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stadion">
+            <EntityTypeMapping TypeName="VoetbalModel.Stadion">
+              <MappingFragment StoreEntitySet="Stadion">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="naam" ColumnName="naam" />
+                <ScalarProperty Name="straat" ColumnName="straat" />
+                <ScalarProperty Name="straatNummer" ColumnName="straatNummer" />
+                <ScalarProperty Name="gemeente" ColumnName="gemeente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StadionTeam">
+            <EntityTypeMapping TypeName="VoetbalModel.StadionTeam">
+              <MappingFragment StoreEntitySet="StadionTeam">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="stadionId" ColumnName="stadionId" />
+                <ScalarProperty Name="teamId" ColumnName="teamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Team">
+            <EntityTypeMapping TypeName="VoetbalModel.Team">
+              <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="naam" ColumnName="naam" />
+                <ScalarProperty Name="oprichtingsDatum" ColumnName="oprichtingsDatum" />
+                <ScalarProperty Name="website" ColumnName="website" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamCompetitie">
+            <EntityTypeMapping TypeName="VoetbalModel.TeamCompetitie">
+              <MappingFragment StoreEntitySet="TeamCompetitie">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="teamId" ColumnName="teamId" />
+                <ScalarProperty Name="competitieId" ColumnName="competitieId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamSpeler">
+            <EntityTypeMapping TypeName="VoetbalModel.TeamSpeler">
+              <MappingFragment StoreEntitySet="TeamSpeler">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="spelerId" ColumnName="spelerId" />
+                <ScalarProperty Name="teamId" ColumnName="teamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trainer">
+            <EntityTypeMapping TypeName="VoetbalModel.Trainer">
+              <MappingFragment StoreEntitySet="Trainer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="voornaam" ColumnName="voornaam" />
+                <ScalarProperty Name="naam" ColumnName="naam" />
+                <ScalarProperty Name="nationaliteit" ColumnName="nationaliteit" />
+                <ScalarProperty Name="geboorteDatum" ColumnName="geboorteDatum" />
+                <ScalarProperty Name="lengteInM" ColumnName="lengteInM" />
+                <ScalarProperty Name="gewichtInKG" ColumnName="gewichtInKG" />
+                <ScalarProperty Name="functieId" ColumnName="functieId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TrainerTeam">
+            <EntityTypeMapping TypeName="VoetbalModel.TrainerTeam">
+              <MappingFragment StoreEntitySet="TrainerTeam">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="trainerId" ColumnName="trainerId" />
+                <ScalarProperty Name="teamId" ColumnName="teamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wedstrijd">
+            <EntityTypeMapping TypeName="VoetbalModel.Wedstrijd">
+              <MappingFragment StoreEntitySet="Wedstrijd">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="uitslag" ColumnName="uitslag" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="teamId" ColumnName="teamId" />
+                <ScalarProperty Name="tegenstanderId" ColumnName="tegenstanderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
